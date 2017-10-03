@@ -1,0 +1,169 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue Example</title>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+	    .textView {
+	        background: #E0FFFF;
+	    }
+	    .el-row {
+	        margin-bottom: 20px;
+	        &:last-child {
+	            margin-bottom: 0;
+	        }
+	    }
+
+	    .el-col {
+	        border-radius: 4px;
+	    }
+
+	    .el-col {
+	        border-radius: 4px;
+	    }
+
+	    .grid-content {
+	        border-radius: 4px;
+	        min-height: 36px;
+	    }
+
+	    .bg-purple-dark {
+	        background: #58B7FF;
+	    }
+    </style>
+</head>
+
+<body>
+    <!-- import vue library		 -->
+    <script src="./vue.js"></script>
+    <!-- import Element UI library -->
+    <script src="./index.js"></script>
+    <!-- import self created file -->
+    <!-- <script src="./selfDefinedComp.js"></script> -->
+
+    <div id="app">
+
+    	<h3>All the test examples</h3>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">{{btnText}}</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+                    <span class="textView">{{message}}</span>
+                    <el-button type="primary" size="large" v-on:click="reverseMessage">{{btnText}}</el-button>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">Test Input Model</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+			        <input v-model="inputName" />
+			        <span>{{inputName}}</span></el-button>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">V-For Command</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+	            	<ol>
+	            		<li v-for = "book in books" >
+	            			{{book.name}}
+	            		</li>
+	            	</ol>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">Vue Component BookList---inline code</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+                	<ol>
+	                	<book-list1
+	                		v-for = "book in books"
+	                		v-bind:book = "book"
+	                		v-bind:key="book.id"/>
+                	</ol>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">Vue Component BookList-define template id</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+                	<ol>
+	                	<book-list
+	                		v-for = "book in books"
+	                		v-bind:book = "book"
+	                		v-bind:key="book.id"/>
+                	</ol>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row >
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">Vue Component BookList- single Vue File</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-dark">
+                	need to find one solution to write single file
+                </div>
+            </el-col>
+        </el-row>        
+    </div>
+
+    <!-- custom define component -->
+    <template id="myComponent">
+   		<li>{{ book.name }}</li>
+    </template>
+
+    <script>
+
+    	//  	define component in Vue Class
+		Vue.component('book-list1',{
+			props:['book'],
+			template: '<li>{{ book.name }}</li>'
+		});
+
+    	//  	define component in Vue Class
+		Vue.component('book-list',{
+			props:['book'],
+			template: '#myComponent'
+		});
+
+	    var oApp = new Vue({
+	        el: "#app",
+	        data: {
+	            message: "12345",
+	            btnText: "Reverse Message",
+	            inputName: "Suncodeer",
+	            books: [
+	                { id: 0, "name": "Java" },
+	                { id: 1, "name": "C++" },
+	                { id: 2, "name": "Javascript" }, 
+	                { id: 3, "name": "Javascript" }
+	            ]
+	        },
+	        methods: {
+	            reverseMessage: function(oEvent) {
+	                this.message = this.message.split('').reverse().join('');
+	            }
+	        }
+	    });
+
+
+    </script>
+</body>
+
+</html>
